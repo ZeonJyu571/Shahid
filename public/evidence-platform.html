@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shahed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #FAFAF8;
+      --bg2:     #F3F0EA;
+      --bg3:     #EAE6DE;
+      --border:  #D6D0C6;
+      --border2: #B5ADA2;
+      --text:    #1D1B19;
+      --dim:     #6A6460;
+      --faint:   #A8A29A;
+      --rule:    #E0DBD3;
+      --crimson:        #7A1818;
+      --crimson-mid:    #981E1E;
+      --crimson-bright: #B52222;
+      --crimson-bg:     rgba(122,24,24,0.055);
+      --green:          #1A4228;
+      --green-bright:   #246038;
+      --green-bg:       rgba(26,66,40,0.07);
+      --gold:           #6B5A18;
+      --gold-bright:    #967E18;
+      --gold-bg:        rgba(107,90,24,0.09);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--rule);
+      padding: 0 52px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .logo-wrap { display:flex; align-items:center; gap:14px; flex:1; }
+
+    .logo-seal { width:34px; height:34px; flex-shrink:0; }
+
+    .logo-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px; font-weight: 500;
+      letter-spacing: 0.04em; color: var(--text); line-height:1.2;
+    }
+
+    .logo-sub {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10px; font-weight: 300;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint);
+    }
+
+    nav {
+      display: flex; align-items: stretch; height: 100%;
+      border-left: 1px solid var(--rule); padding-left: 24px;
+    }
+
+    .nav-btn {
+      background: none; border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--faint);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 300; font-size: 12px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0 20px; cursor: pointer;
+      transition: color 0.18s; margin-bottom: -1px;
+    }
+    .nav-btn:hover { color: var(--dim); }
+    .nav-btn.active { color: var(--text); border-bottom-color: var(--crimson); }
+
+    /* LAYOUT */
+    main { max-width: 900px; margin: 0 auto; padding: 60px 52px 100px; }
+
+    .pg-eyebrow {
+      font-size: 11px; font-weight: 300;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--crimson-mid); margin-bottom: 14px;
+    }
+
+    .pg-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 44px; font-weight: 500;
+      letter-spacing: 0.01em; color: var(--text);
+      line-height: 1.1; margin-bottom: 18px;
+    }
+
+    .pg-desc {
+      font-style: italic; font-size: 15px; font-weight: 300;
+      color: var(--dim); line-height: 1.78; max-width: 640px;
+    }
+
+    .pg-divider { border:none; border-top:1px solid var(--rule); margin: 38px 0 46px; }
+
+    /* NOTICE */
+    .notice {
+      border-left: 3px solid var(--crimson);
+      background: var(--crimson-bg);
+      padding: 14px 20px; margin-bottom: 40px;
+    }
+    .notice p { font-size: 13px; font-style: italic; color: var(--dim); line-height:1.75; }
+    .notice strong { font-weight: 400; font-style: normal; color: var(--text); }
+
+    /* FORM */
+    .section-label {
+      font-size: 10px; font-weight: 300;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--faint);
+      padding-bottom: 13px; border-bottom: 1px solid var(--rule);
+      margin-bottom: 24px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::before {
+      content: ''; display: block;
+      width: 3px; height: 13px;
+      background: var(--crimson); flex-shrink:0;
+    }
+
+    .form-section { margin-bottom: 44px; }
+
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px; }
+    .form-row.full  { grid-template-columns:1fr; }
+    .form-row.third { grid-template-columns:1fr 1fr 1fr; }
+
+    .form-group { display:flex; flex-direction:column; gap:8px; }
+
+    label {
+      font-size: 12px; font-weight: 300;
+      letter-spacing: 0.04em; color: var(--dim);
+    }
+    label .req { color: var(--crimson-mid); margin-left:3px; }
+    label .opt { color: var(--faint); font-size:11px; margin-left:6px; }
+
+    input[type="text"], input[type="date"], select, textarea {
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px; font-weight: 300;
+      padding: 10px 14px;
+      outline: none; border-radius: 0; width: 100%;
+      transition: border-color 0.18s, background 0.18s;
+      appearance: none; -webkit-appearance: none;
+    }
+    input::placeholder, textarea::placeholder { color: var(--faint); font-style:italic; }
+    input:focus, select:focus, textarea:focus { border-color: var(--border2); }
+    textarea { resize:vertical; min-height:130px; line-height:1.7; }
+    select {
+      cursor:pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23A8A29A'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    /* UPLOAD */
+    .upload-zone {
+      border: 1px dashed var(--border2);
+      padding: 44px; text-align: center;
+      cursor: pointer; transition: all 0.2s;
+      position: relative; background: #fff;
+    }
+    .upload-zone:hover { border-color: var(--dim); background: var(--bg2); }
+    .upload-zone input[type="file"] {
+      position:absolute; inset:0; opacity:0;
+      cursor:pointer; width:100%; height:100%;
+    }
+    .upload-icon { display:block; margin:0 auto 16px; opacity:0.22; }
+    .upload-zone p { font-size:14px; font-style:italic; color:var(--dim); margin-bottom:6px; }
+    .upload-zone small { font-size:11px; color:var(--faint); letter-spacing:0.06em; }
+    .file-list { margin-top:14px; text-align:left; }
+    .file-item {
+      display:flex; align-items:center; gap:10px;
+      padding:8px 12px; border:1px solid var(--rule);
+      margin-top:6px; font-size:12px; color:var(--dim);
+      font-family:'JetBrains Mono',monospace; background:var(--bg2);
+    }
+    .file-item span { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+    /* BUTTONS */
+    .btn-primary {
+      background: var(--crimson); border: 1px solid var(--crimson-mid);
+      color: #F0DEDE;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px; font-weight: 400;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 14px 44px; cursor: pointer; transition: all 0.18s;
+    }
+    .btn-primary:hover { background: var(--crimson-mid); }
+
+    .btn-ghost {
+      background: none; border: 1px solid var(--border);
+      color: var(--dim);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px; font-weight: 300;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 14px 32px; cursor: pointer; transition: all 0.18s;
+    }
+    .btn-ghost:hover { border-color: var(--border2); color: var(--text); }
+
+    .form-footer {
+      display:flex; justify-content:space-between; align-items:center;
+      padding-top:30px; border-top:1px solid var(--rule); margin-top:8px;
+    }
+    .form-footer-note { font-size:12px; font-style:italic; color:var(--faint); }
+
+    /* INQUIRY */
+    .search-bar { display:flex; margin-bottom:36px; }
+    .search-bar input {
+      flex:1; font-family:'JetBrains Mono',monospace;
+      font-size:13px; letter-spacing:0.05em;
+    }
+    .search-bar button {
+      background: var(--bg2); border:1px solid var(--border); border-left:none;
+      color: var(--dim);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0 28px; cursor:pointer; transition:all 0.18s; white-space:nowrap;
+    }
+    .search-bar button:hover { background:var(--bg3); color:var(--text); }
+
+    .empty-state { text-align:center; padding:72px 0; }
+    .empty-state p { font-size:14px; font-style:italic; color:var(--faint); }
+
+    .case-card { border:1px solid var(--border); background:#fff; animation:fadeIn 0.28s ease; }
+
+    .case-card-header {
+      padding:18px 24px; border-bottom:1px solid var(--rule);
+      display:flex; justify-content:space-between; align-items:center;
+      background: var(--bg2);
+    }
+    .case-id-label {
+      font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--faint); display:block; margin-bottom:4px;
+    }
+    .case-id-value {
+      font-family:'JetBrains Mono',monospace;
+      font-size:14px; letter-spacing:0.06em; color:var(--text);
+    }
+
+    .badge {
+      font-size:10px; font-weight:400;
+      letter-spacing:0.18em; text-transform:uppercase;
+      padding:5px 14px; border:1px solid; flex-shrink:0;
+    }
+    .badge-approved { color:#1A5C30; border-color:var(--green-bright); background:var(--green-bg); }
+    .badge-pending  { color:#7A6010; border-color:var(--gold-bright);   background:var(--gold-bg); }
+
+    .case-card-body {
+      padding:26px 24px;
+      display:grid; grid-template-columns:170px 1fr;
+      gap:16px 28px; align-items:start;
+    }
+    .field-label {
+      font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+      color:var(--faint); padding-top:2px;
+    }
+    .field-value { font-size:14px; color:var(--text); }
+    .hash-val {
+      font-family:'JetBrains Mono',monospace;
+      font-size:11px; color:var(--dim); word-break:break-all; line-height:1.9;
+    }
+    .case-card-footer {
+      padding:14px 24px; border-top:1px solid var(--rule);
+      font-size:12px; font-style:italic; color:var(--faint); background:var(--bg2);
+    }
+
+    /* ADMIN */
+    .stats-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1px; background:var(--rule); border:1px solid var(--rule);
+      margin-bottom:42px;
+    }
+    .stat-cell { background:#fff; padding:22px 26px; }
+    .stat-label {
+      font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--faint); margin-bottom:10px;
+    }
+    .stat-num {
+      font-family:'Cormorant Garamond',serif;
+      font-size:40px; font-weight:500; line-height:1; color:var(--text);
+    }
+    .stat-num.warn  { color:#8A7010; }
+    .stat-num.muted { color:var(--faint); }
+
+    .data-table { width:100%; border-collapse:collapse; }
+    .data-table thead tr { border-bottom:1px solid var(--rule); }
+    .data-table th {
+      text-align:left; font-size:10px; font-weight:300;
+      letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--faint); padding:12px 16px;
+    }
+    .data-table tbody tr { border-bottom:1px solid var(--rule); transition:background 0.15s; }
+    .data-table tbody tr:hover { background:var(--bg2); }
+    .data-table td { padding:14px 16px; vertical-align:middle; font-size:14px; }
+    .td-mono { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--dim); }
+
+    .btn-approve {
+      background: none; border:1px solid var(--green-bright); color:var(--green-bright);
+      font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:300;
+      letter-spacing:0.12em; text-transform:uppercase;
+      padding:6px 16px; cursor:pointer; transition:all 0.15s;
+    }
+    .btn-approve:hover { background:var(--green-bg); }
+
+    .btn-reject {
+      background: none; border:1px solid var(--border); color:var(--faint);
+      font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:300;
+      letter-spacing:0.12em; text-transform:uppercase;
+      padding:6px 16px; cursor:pointer; transition:all 0.15s;
+    }
+    .btn-reject:hover { border-color:var(--crimson-mid); color:var(--crimson-bright); }
+
+    .row-actions { display:flex; gap:8px; }
+
+    .expand-btn {
+      background:none; border:none; color:var(--faint);
+      cursor:pointer; font-size:11px; padding:0;
+      transition:color 0.15s; font-family:monospace;
+    }
+    .expand-btn:hover { color:var(--text); }
+
+    .detail-row { display:none; }
+    .detail-row.open { display:table-row; }
+
+    .detail-cell {
+      padding:18px 20px 22px 48px !important;
+      background:var(--bg2); border-bottom:1px solid var(--rule);
+    }
+    .detail-sub {
+      font-size:10px; letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--faint); margin-bottom:5px; margin-top:14px;
+    }
+    .detail-desc { font-size:13px; font-style:italic; color:var(--dim); line-height:1.75; }
+
+    /* MODAL */
+    .modal-overlay {
+      display:none; position:fixed; inset:0;
+      background:rgba(250,250,248,0.84);
+      backdrop-filter:blur(4px);
+      z-index:200; align-items:center; justify-content:center;
+    }
+    .modal-overlay.open { display:flex; }
+
+    .modal {
+      background:#fff; border:1px solid var(--border);
+      padding:48px; max-width:480px; width:90%;
+      animation:fadeIn 0.22s ease;
+      box-shadow:0 8px 48px rgba(0,0,0,0.07);
+    }
+    .modal-eyebrow {
+      font-size:10px; letter-spacing:0.22em; text-transform:uppercase;
+      color:var(--green-bright); margin-bottom:16px;
+    }
+    .modal h2 {
+      font-family:'Cormorant Garamond',serif;
+      font-size:28px; font-weight:500; color:var(--text); margin-bottom:14px;
+    }
+    .modal p { font-size:13px; font-style:italic; color:var(--dim); line-height:1.8; margin-bottom:26px; }
+
+    .modal-case-id {
+      font-family:'JetBrains Mono',monospace;
+      font-size:20px; letter-spacing:0.08em; color:var(--text);
+      text-align:center; padding:20px;
+      background:var(--bg2); border:1px solid var(--border);
+      margin-bottom:26px;
+    }
+    .modal-actions { display:flex; gap:12px; }
+
+    /* PAGES */
+    .page { display:none; }
+    .page.active { display:block; animation:fadeIn 0.28s ease; }
+
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(6px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <svg class="logo-seal" viewBox="0 0 34 34" fill="none">
+      <rect x="1" y="1" width="32" height="32" stroke="#D6D0C6" stroke-width="1"/>
+      <rect x="5" y="5" width="24" height="24" stroke="#EAE6DE" stroke-width="0.5"/>
+      <line x1="17" y1="8"  x2="17" y2="26" stroke="#D6D0C6" stroke-width="0.75"/>
+      <line x1="8"  y1="17" x2="26" y2="17" stroke="#D6D0C6" stroke-width="0.75"/>
+      <circle cx="17" cy="17" r="4.5" fill="none" stroke="#981E1E" stroke-width="1.2"/>
+      <circle cx="17" cy="17" r="1.5" fill="#981E1E"/>
+    </svg>
+    <div>
+      <div class="logo-name">Shahed</div>
+      <div class="logo-sub">Evidence Preservation Platform</div>
+    </div>
+  </div>
+  <nav>
+    <button class="nav-btn active" onclick="showPage('submit',this)">Submit Evidence</button>
+    <button class="nav-btn" onclick="showPage('inquiry',this)">Case Inquiry</button>
+    <button class="nav-btn" onclick="showPage('admin',this)">Review Queue</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- PAGE: SUBMIT -->
+  <div id="page-submit" class="page active">
+    <h1 class="pg-title" style="margin-bottom:8px">Shahed</h1>
+    <p style="font-size:20px;font-style:italic;color:var(--dim);margin-bottom:18px;">— Archive for Political Violence</p>
+    <p class="pg-desc">This platform preserves evidence on behalf of victims of political violence. Submissions undergo manual review before their cryptographic hash digest is written to a public blockchain for tamper-proof long-term archival.</p>
+    <hr class="pg-divider">
+
+    <div class="notice">
+      <p><strong>Privacy notice:</strong> Original files and sensitive testimony are accessible only to authorised reviewers and will never appear in public case queries. Do not submit materials containing high-risk identifying information over unencrypted networks.</p>
+    </div>
+
+    <form id="submit-form" onsubmit="handleSubmit(event)">
+
+      <div class="form-section">
+        <div class="section-label">Incident Information</div>
+        <div class="form-row third">
+          <div class="form-group">
+            <label>Date of Incident<span class="req">*</span></label>
+            <input type="date" id="inc-date" required>
+          </div>
+          <div class="form-group">
+            <label>Incident Type<span class="req">*</span></label>
+            <select id="inc-type" required>
+              <option value="" disabled selected>Select…</option>
+              <option>Enforced Disappearance</option>
+              <option>Arbitrary Detention</option>
+              <option>Torture or Ill-Treatment</option>
+              <option>Extrajudicial Execution</option>
+              <option>Forced Displacement</option>
+              <option>Property Seizure or Destruction</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Location<span class="req">*</span></label>
+            <input type="text" id="inc-location" placeholder="City / Region / Country" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Alleged Perpetrator<span class="opt">(if known)</span></label>
+            <input type="text" id="inc-actor" placeholder="e.g. security forces, armed group…">
+          </div>
+          <div class="form-group">
+            <label>Estimated Number of Victims<span class="opt">(if known)</span></label>
+            <input type="text" id="inc-count" placeholder="e.g. 1 person, approx. 20 people">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">Testimony &amp; Description</div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Detailed Account<span class="req">*</span></label>
+            <textarea id="inc-desc" placeholder="Describe the incident in full detail — timeline, individuals involved, actions taken, and consequences. This field is classified as sensitive and will not appear in public queries." required></textarea>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Public Summary<span class="req">*</span></label>
+            <textarea id="inc-summary" style="min-height:82px" placeholder="One to two sentences suitable for public display. This text will appear in case inquiry results." required></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">Evidence Files</div>
+        <div class="upload-zone">
+          <input type="file" id="file-input" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFiles(this.files)">
+          <svg class="upload-icon" viewBox="0 0 48 48" width="50" height="50" fill="none">
+            <rect x="6" y="10" width="36" height="30" rx="2" stroke="#1D1B19" stroke-width="1.4"/>
+            <path d="M24 33V19M24 19l-7 7M24 19l7 7" stroke="#1D1B19" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 10V7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3" stroke="#1D1B19" stroke-width="1.4"/>
+          </svg>
+          <p>Click or drag files here to upload</p>
+          <small>Accepted: images, video, audio, PDF, documents &nbsp;·&nbsp; 50 MB per file maximum</small>
+          <div class="file-list" id="file-list"></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">Source Information<span style="color:var(--faint);font-size:10px;margin-left:10px;font-weight:300;letter-spacing:0.1em">Optional · Internal use only</span></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Contact<span class="opt">(phone / email / encrypted messenger)</span></label>
+            <input type="text" id="src-contact" placeholder="Will not appear in any public record">
+          </div>
+          <div class="form-group">
+            <label>Relationship to Incident</label>
+            <select id="src-relation">
+              <option value="" disabled selected>Select…</option>
+              <option>Direct eyewitness</option>
+              <option>Survivor</option>
+              <option>Family member of victim</option>
+              <option>Journalist</option>
+              <option>NGO staff</option>
+              <option>Anonymous</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <span class="form-footer-note">A unique case identifier will be generated upon submission. Please retain it for future reference.</span>
+        <div style="display:flex;gap:12px">
+          <button type="button" class="btn-ghost" onclick="clearForm()">Clear</button>
+          <button type="submit" class="btn-primary">Submit Evidence</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- PAGE: INQUIRY -->
+  <div id="page-inquiry" class="page">
+    <div class="pg-eyebrow">Public Record</div>
+    <h1 class="pg-title">Case Inquiry</h1>
+    <p class="pg-desc">Enter a case identifier to retrieve the public-layer record and blockchain hash digest. Sensitive testimony and personal details are not disclosed through this interface.</p>
+    <hr class="pg-divider">
+
+    <div class="search-bar">
+      <input type="text" id="inquiry-input" placeholder="e.g. EVD-2024-A3F7C812" oninput="this.value=this.value.toUpperCase()">
+      <button onclick="doInquiry()">Search</button>
+    </div>
+
+    <div id="inquiry-result">
+      <div class="empty-state">
+        <svg viewBox="0 0 64 64" width="50" height="50" fill="none" style="display:block;margin:0 auto 18px;opacity:0.18">
+          <circle cx="32" cy="32" r="28" stroke="#1D1B19" stroke-width="1.5"/>
+          <line x1="32" y1="20" x2="32" y2="37" stroke="#1D1B19" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="32" cy="44" r="1.8" fill="#1D1B19"/>
+        </svg>
+        <p>Enter a case identifier above to retrieve the record</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: ADMIN -->
+  <div id="page-admin" class="page">
+    <div class="pg-eyebrow">Administration</div>
+    <h1 class="pg-title">Review Queue</h1>
+    <p class="pg-desc">The following submissions are awaiting review. Upon approval, the system will separate sensitive and public data layers, compute hash digests, and write the record to the local database.</p>
+    <hr class="pg-divider">
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:32px;">
+      <input type="password" id="admin-password" placeholder="Admin password"
+        style="width:220px;padding:10px 14px;border:1px solid var(--border);font-size:13px;background:#fff;border-radius:0;outline:none;font-family:Arial,Helvetica,sans-serif;">
+      <button class="btn-ghost" onclick="loadAdmin()">Load Cases</button>
+      <button class="btn-ghost" style="margin-left:auto;border-color:var(--green-bright);color:var(--green-bright);" onclick="uploadToChain()">Commit to Chain</button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="stat-label">Pending Review</div>
+        <div class="stat-num warn" id="stat-pending">—</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-label">Archived Cases</div>
+        <div class="stat-num" id="stat-archived">—</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-label">On-chain Records</div>
+        <div class="stat-num muted" id="stat-onchain">—</div>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width:32px"></th>
+          <th>Case ID</th>
+          <th>Type</th>
+          <th>Location</th>
+          <th>Submitted</th>
+          <th>Source</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="admin-tbody"></tbody>
+    </table>
+
+    <!-- Archived cases -->
+    <div style="margin-top:56px;">
+      <div class="section-label">Archived Cases</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Case ID</th>
+            <th>Type</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>On-chain</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="archived-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal">
+    <div class="modal-eyebrow">Submission Received</div>
+    <h2>Evidence Recorded</h2>
+    <p>Your submission has entered the review queue. Upon approval, a cryptographic hash of the record will be committed to the archive. Please retain the case identifier below:</p>
+    <div class="modal-case-id" id="modal-case-id">EVD-0000-00000000</div>
+    <p style="font-size:12px;margin-bottom:26px;">You may verify archival status at any time through the Case Inquiry page.</p>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="closeModal()">Confirm</button>
+      <button class="btn-ghost"    onclick="copyId()">Copy ID</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── Navigation ───────────────────────────────────────────────────────────
+  function showPage(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ─── File upload preview ──────────────────────────────────────────────────
+  function handleFiles(files) {
+    const list = document.getElementById('file-list');
+    list.innerHTML = '';
+    Array.from(files).forEach(f => {
+      const d = document.createElement('div');
+      d.className = 'file-item';
+      d.innerHTML = `<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 2h7l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="#A8A29A" stroke-width="1.2"/><path d="M10 2v3h3" stroke="#A8A29A" stroke-width="1.2" fill="none"/></svg><span>${f.name}</span><span style="color:var(--faint);flex-shrink:0">${(f.size/1024).toFixed(0)} KB</span>`;
+      list.appendChild(d);
+    });
+  }
+
+  // ─── Submit → POST /api/submit ────────────────────────────────────────────
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = 'Submitting…'; btn.disabled = true;
+
+    const body = new FormData();
+    body.append('date',        document.getElementById('inc-date').value);
+    body.append('type',        document.getElementById('inc-type').value);
+    body.append('location',    document.getElementById('inc-location').value);
+    body.append('summary',     document.getElementById('inc-summary').value);
+    body.append('description', document.getElementById('inc-desc').value);
+    body.append('actor',       document.getElementById('inc-actor').value);
+    body.append('victimCount', document.getElementById('inc-count').value);
+    body.append('contact',     document.getElementById('src-contact').value);
+    body.append('relation',    document.getElementById('src-relation').value);
+
+    const files = document.getElementById('file-input').files;
+    for (const file of files) body.append('files', file);
+
+    try {
+      const res  = await fetch('/api/submit', { method: 'POST', body });
+      const data = await res.json();
+      if (!res.ok) { alert('Submission failed: ' + data.error); return; }
+      document.getElementById('modal-case-id').textContent = data.case_id;
+      document.getElementById('success-modal').classList.add('open');
+    } catch {
+      alert('Network error — is the server running?');
+    } finally {
+      btn.textContent = 'Submit Evidence'; btn.disabled = false;
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('success-modal').classList.remove('open');
+    clearForm();
+  }
+
+  function copyId() {
+    navigator.clipboard.writeText(document.getElementById('modal-case-id').textContent).catch(()=>{});
+    const b = document.querySelector('.modal-actions .btn-ghost');
+    b.textContent = 'Copied'; setTimeout(()=>b.textContent='Copy ID', 2000);
+  }
+
+  function clearForm() {
+    document.getElementById('submit-form').reset();
+    document.getElementById('file-list').innerHTML = '';
+  }
+
+  // ─── Inquiry → GET /api/inquiry/:id ──────────────────────────────────────
+  async function doInquiry() {
+    const q  = document.getElementById('inquiry-input').value.trim().toUpperCase();
+    const el = document.getElementById('inquiry-result');
+
+    if (!q) {
+      el.innerHTML = `<div class="empty-state"><p style="color:var(--crimson-bright)">Please enter a case identifier.</p></div>`;
+      return;
+    }
+
+    el.innerHTML = `<div class="empty-state"><p style="color:var(--faint)">Searching…</p></div>`;
+
+    try {
+      const res  = await fetch(`/api/inquiry/${encodeURIComponent(q)}`);
+      const data = await res.json();
+
+      if (res.status === 404) {
+        el.innerHTML = `<div class="empty-state"><p>No record found for <span style="font-family:'JetBrains Mono',monospace">${q}</span></p><p style="margin-top:8px;font-size:12px">Please verify the identifier or contact the platform administrator.</p></div>`;
+        return;
+      }
+
+      if (res.status === 202) {
+        el.innerHTML = `<div class="empty-state"><p style="color:var(--gold-bright)">Case <span style="font-family:'JetBrains Mono',monospace">${q}</span> is currently under review.</p></div>`;
+        return;
+      }
+
+      const chainInfo = data.xrpl_tx_id
+        ? `<span class="field-label">XRPL TX</span><span class="hash-val">${data.xrpl_tx_id}</span>
+           <span class="field-label">Merkle Root</span><span class="hash-val">${data.merkle_root}</span>`
+        : `<span class="field-label">Blockchain</span><span class="field-value" style="font-size:12px;color:var(--faint)">Pending batch commit</span>`;
+
+      el.innerHTML = `<div class="case-card">
+        <div class="case-card-header">
+          <div><span class="case-id-label">Case Identifier</span><span class="case-id-value">${q}</span></div>
+          <span class="badge badge-approved">Archived</span>
+        </div>
+        <div class="case-card-body">
+          <span class="field-label">Incident Type</span><span class="field-value">${data.type}</span>
+          <span class="field-label">Location</span><span class="field-value">${data.location}</span>
+          <span class="field-label">Date</span><span class="field-value">${data.date}</span>
+          <span class="field-label">Public Summary</span><span class="field-value" style="font-style:italic">${data.summary}</span>
+          <span class="field-label">Description</span><span class="field-value">${data.description ?? '—'}</span>
+          <span class="field-label">Original Hash</span><span class="hash-val">${data.raw_submission_hash ?? '—'}</span>
+          <span class="field-label">Public Hash</span><span class="hash-val">${data.public_hash ?? '—'}</span>
+          ${chainInfo}
+          <span class="field-label">Algorithm</span><span class="field-value" style="font-size:12px;color:var(--faint)">SHA-256</span>
+        </div>
+        <div class="case-card-footer">Hash digests may be used to independently verify record integrity. Sensitive testimony is not disclosed through this interface.</div>
+      </div>`;
+    } catch {
+      el.innerHTML = `<div class="empty-state"><p style="color:var(--crimson-bright)">Network error — is the server running?</p></div>`;
+    }
+  }
+
+  document.getElementById('inquiry-input').addEventListener('keydown', e => { if(e.key==='Enter') doInquiry(); });
+
+  // ─── Admin helpers ────────────────────────────────────────────────────────
+  function adminPassword() { return document.getElementById('admin-password').value; }
+  function adminHeaders()  { return { 'Content-Type': 'application/json', 'x-admin-password': adminPassword() }; }
+
+  // ─── File gallery helper ──────────────────────────────────────────────────
+  const IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+
+  function renderFileGallery(filePaths) {
+    if (!filePaths || filePaths.length === 0) return '';
+
+    const uploadsDir = filePaths[0]?.includes('/uploads/')
+      ? filePaths[0].split('/uploads/')[0] + '/uploads/'
+      : null;
+
+    const items = filePaths.map(fp => {
+      const filename = fp.split('/').pop();
+      const ext      = ('.' + filename.split('.').pop()).toLowerCase();
+      const isImage  = IMAGE_EXTS.includes(ext);
+
+      // Build the relative path from uploads/ onwards for the API
+      const relPath  = fp.includes('/uploads/')
+        ? fp.split('/uploads/')[1]
+        : filename;
+
+      const url = `/api/admin/files/${relPath}?pwd=${encodeURIComponent(adminPassword())}`;
+
+      if (isImage) {
+        return `<div style="display:inline-block;margin:6px 6px 0 0;vertical-align:top;">
+          <a href="${url}" target="_blank">
+            <img src="${url}" alt="${filename}"
+              style="max-width:180px;max-height:140px;object-fit:cover;border:1px solid var(--border);display:block;cursor:zoom-in;"
+              onerror="this.parentElement.parentElement.innerHTML='<span style=font-size:12px;color:var(--faint)>${filename}</span>'">
+          </a>
+          <div style="font-size:10px;color:var(--faint);margin-top:4px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${filename}</div>
+        </div>`;
+      } else {
+        return `<div style="display:inline-block;margin:6px 6px 0 0;vertical-align:top;">
+          <a href="${url}" target="_blank"
+            style="display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--border);background:var(--bg2);font-size:12px;color:var(--dim);text-decoration:none;">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M3 2h7l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="#A8A29A" stroke-width="1.2"/>
+              <path d="M10 2v3h3" stroke="#A8A29A" stroke-width="1.2" fill="none"/>
+            </svg>
+            ${filename}
+          </a>
+        </div>`;
+      }
+    }).join('');
+
+    return `<div class="detail-sub" style="margin-top:16px">Uploaded Files</div>
+      <div style="margin-top:8px">${items}</div>`;
+  }
+
+  // ─── Load cases → GET /api/admin/cases ───────────────────────────────────
+  async function loadAdmin() {
+    const tb = document.getElementById('admin-tbody');
+    tb.innerHTML = `<tr><td colspan="7" style="padding:24px;text-align:center;font-style:italic;color:var(--faint)">Loading…</td></tr>`;
+
+    try {
+      const [pendingRes, allRes] = await Promise.all([
+        fetch('/api/admin/cases?status=pending', { headers: { 'x-admin-password': adminPassword() } }),
+        fetch('/api/admin/cases?status=all',     { headers: { 'x-admin-password': adminPassword() } }),
+      ]);
+
+      if (pendingRes.status === 401) {
+        tb.innerHTML = `<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--crimson-bright)">Incorrect password.</td></tr>`;
+        return;
+      }
+
+      const { cases: pending } = await pendingRes.json();
+      const { cases: all }     = await allRes.json();
+      const approved = all.filter(c => c.status === 'approved');
+      const onchain  = approved.filter(c => c.xrpl_tx_id);
+
+      document.getElementById('stat-pending').textContent  = pending.length;
+      document.getElementById('stat-archived').textContent = approved.length;
+      document.getElementById('stat-onchain').textContent  = onchain.length;
+
+      // ── Pending table ──────────────────────────────────────────────────────
+      tb.innerHTML = '';
+      if (pending.length === 0) {
+        tb.innerHTML = `<tr><td colspan="7" style="padding:24px;text-align:center;font-style:italic;color:var(--faint)">No pending cases.</td></tr>`;
+      } else {
+        pending.forEach(c => {
+          const tr = document.createElement('tr');
+          tr.id = `row-${c.id}`;
+          tr.innerHTML = `
+            <td><button class="expand-btn" onclick="toggleDetail('${c.id}')">▶</button></td>
+            <td class="td-mono">${c.id}</td>
+            <td style="font-size:13px">${c.type}</td>
+            <td style="font-size:13px">${c.location}</td>
+            <td class="td-mono">${c.date}</td>
+            <td style="font-size:13px;color:var(--dim)">${c.sensitive?.relation || '—'}</td>
+            <td><div class="row-actions">
+              <button class="btn-approve" onclick="approve('${c.id}')">Approve</button>
+              <button class="btn-reject"  onclick="reject('${c.id}')">Reject</button>
+            </div></td>`;
+          tb.appendChild(tr);
+
+          const dr = document.createElement('tr');
+          dr.id = `detail-${c.id}`; dr.className = 'detail-row';
+          dr.innerHTML = `<td></td><td class="detail-cell" colspan="6">
+            <div class="detail-sub">Detailed Account</div>
+            <div class="detail-desc">${c.sensitive?.description || '—'}</div>
+            <div class="detail-sub" style="margin-top:16px">Contact</div>
+            <div style="font-size:12px;color:var(--dim)">${c.sensitive?.contact || 'Not provided'}</div>
+            <div class="detail-sub" style="margin-top:12px">Submission Hash</div>
+            <div class="hash-val" style="font-size:11px">${c.raw_submission_hash || '—'}</div>
+            ${renderFileGallery(c.sensitive?.filePaths || [])}
+          </td>`;
+          tb.appendChild(dr);
+        });
+      }
+
+      // ── Archived table ─────────────────────────────────────────────────────
+      const atb = document.getElementById('archived-tbody');
+      atb.innerHTML = '';
+      if (approved.length === 0) {
+        atb.innerHTML = `<tr><td colspan="6" style="padding:24px;text-align:center;font-style:italic;color:var(--faint)">No archived cases.</td></tr>`;
+      } else {
+        approved.forEach(c => {
+          const tr = document.createElement('tr');
+          tr.id = `archived-row-${c.id}`;
+          const chainBadge = c.xrpl_tx_id
+            ? `<span class="badge badge-approved" style="font-size:10px">On-chain</span>`
+            : `<span style="font-size:12px;color:var(--faint)">Pending</span>`;
+          const deleteBtn = c.xrpl_tx_id
+            ? `<span style="font-size:12px;color:var(--faint);font-style:italic">Locked</span>`
+            : `<button class="btn-reject" onclick="deleteCase('${c.id}')">Delete</button>`;
+          tr.innerHTML = `
+            <td class="td-mono">${c.id}</td>
+            <td style="font-size:13px">${c.type}</td>
+            <td style="font-size:13px">${c.location}</td>
+            <td class="td-mono">${c.date}</td>
+            <td>${chainBadge}</td>
+            <td>${deleteBtn}</td>`;
+          atb.appendChild(tr);
+        });
+      }
+    } catch {
+      tb.innerHTML = `<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--crimson-bright)">Network error.</td></tr>`;
+    }
+  }
+
+  function toggleDetail(id) {
+    const dr  = document.getElementById(`detail-${id}`);
+    const btn = document.getElementById(`row-${id}`).querySelector('.expand-btn');
+    const open = dr.classList.toggle('open');
+    btn.textContent = open ? '▼' : '▶';
+  }
+
+  // ─── Approve → POST /api/review ──────────────────────────────────────────
+  async function approve(caseId) {
+    try {
+      const res  = await fetch('/api/review', {
+        method: 'POST', headers: adminHeaders(),
+        body: JSON.stringify({ case_id: caseId, action: 'approve' }),
+      });
+      const data = await res.json();
+      if (!res.ok) { alert(data.error); return; }
+      const row = document.getElementById(`row-${caseId}`);
+      const dr  = document.getElementById(`detail-${caseId}`);
+      row.style.cssText = 'opacity:0;transition:opacity 0.35s';
+      dr.style.display  = 'none';
+      setTimeout(() => { row.remove(); dr.remove(); loadAdmin(); }, 360);
+    } catch { alert('Network error.'); }
+  }
+
+  // ─── Reject → POST /api/review ───────────────────────────────────────────
+  async function reject(caseId) {
+    if (!confirm('Permanently reject this submission? This action cannot be undone.')) return;
+    try {
+      const res  = await fetch('/api/review', {
+        method: 'POST', headers: adminHeaders(),
+        body: JSON.stringify({ case_id: caseId, action: 'reject' }),
+      });
+      const data = await res.json();
+      if (!res.ok) { alert(data.error); return; }
+      const row = document.getElementById(`row-${caseId}`);
+      const dr  = document.getElementById(`detail-${caseId}`);
+      row.style.cssText = 'opacity:0;transition:opacity 0.35s';
+      setTimeout(() => { row.remove(); dr.remove(); loadAdmin(); }, 360);
+    } catch { alert('Network error.'); }
+  }
+
+  // ─── Delete archived case → DELETE /api/admin/cases/:id ─────────────────
+  async function deleteCase(caseId) {
+    if (!confirm(`Permanently delete case ${caseId}? This cannot be undone.`)) return;
+    try {
+      const res  = await fetch(`/api/admin/cases/${encodeURIComponent(caseId)}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-password': adminPassword() },
+      });
+      const data = await res.json();
+      if (!res.ok) { alert(data.error); return; }
+      const row = document.getElementById(`archived-row-${caseId}`);
+      row.style.cssText = 'opacity:0;transition:opacity 0.35s';
+      setTimeout(() => { row.remove(); loadAdmin(); }, 360);
+    } catch { alert('Network error.'); }
+  }
+
+  // ─── XRPL → POST /api/xrpl ───────────────────────────────────────────────
+  async function uploadToChain() {
+    if (!confirm('Commit all approved cases to XRPL? This will submit a transaction to the mainnet.')) return;
+    const btn = document.querySelector('button[onclick="uploadToChain()"]');
+    btn.textContent = 'Committing…'; btn.disabled = true;
+
+    try {
+      const res  = await fetch('/api/xrpl', { method: 'POST', headers: { 'x-admin-password': adminPassword() } });
+      const data = await res.json();
+      if (!res.ok) { alert('XRPL error: ' + (data.error || JSON.stringify(data))); return; }
+      if (!data.case_count) { alert('No approved cases pending on-chain commit.'); return; }
+      alert(`✓ Committed ${data.case_count} case(s) to XRPL.\n\nMerkle Root:\n${data.merkle_root}\n\nTX ID:\n${data.xrpl_tx_id}`);
+      loadAdmin();
+    } catch (err) {
+      alert('Network error: ' + err.message);
+    } finally {
+      btn.textContent = 'Commit to Chain'; btn.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>
