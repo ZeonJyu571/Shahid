@@ -1,0 +1,13 @@
+[
+  {
+    "route": "/_not-found",
+    "firstLoadUncompressedJsBytes": 513538,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/0sgt6owmyn--0.js",
+      ".next/static/chunks/0hzx.u1sksp.u.js",
+      ".next/static/chunks/0sqgu0ktmvpgp.js",
+      ".next/static/chunks/07b3eyp7_5ei6.js",
+      ".next/static/chunks/turbopack-02g5zn9j4ng2i.js"
+    ]
+  }
+]

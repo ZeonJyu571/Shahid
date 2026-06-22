@@ -41,9 +41,8 @@ export async function GET(
     );
   }
 
-  // Approved: return public layer + description
-  const publicData    = JSON.parse(row.public_data);
-  const sensitiveData = JSON.parse(row.sensitive_data);
+  // Approved: return public layer only — sensitive data never exposed
+  const publicData = JSON.parse(row.public_data);
 
   return NextResponse.json({
     case_id:             id,
@@ -52,7 +51,6 @@ export async function GET(
     type:                publicData.type,
     location:            publicData.location,
     summary:             publicData.summary,
-    description:         sensitiveData.description,
     raw_submission_hash: row.raw_submission_hash,
     public_hash:         row.public_hash,
     merkle_root:         row.merkle_root,

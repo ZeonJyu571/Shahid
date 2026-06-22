@@ -1,0 +1,12 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/admin/cases/[id]/route": "app/api/admin/cases/[id]/route.js",
+  "/api/admin/cases/route": "app/api/admin/cases/route.js",
+  "/api/admin/files/[...path]/route": "app/api/admin/files/[...path]/route.js",
+  "/api/inquiry/[id]/route": "app/api/inquiry/[id]/route.js",
+  "/api/review/route": "app/api/review/route.js",
+  "/api/submit/route": "app/api/submit/route.js",
+  "/api/xrpl/route": "app/api/xrpl/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
+}

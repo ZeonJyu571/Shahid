@@ -1,0 +1,12 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/admin/cases/[id]/route": "/api/admin/cases/[id]",
+  "/api/admin/cases/route": "/api/admin/cases",
+  "/api/admin/files/[...path]/route": "/api/admin/files/[...path]",
+  "/api/inquiry/[id]/route": "/api/inquiry/[id]",
+  "/api/review/route": "/api/review",
+  "/api/submit/route": "/api/submit",
+  "/api/xrpl/route": "/api/xrpl",
+  "/favicon.ico/route": "/favicon.ico"
+}
